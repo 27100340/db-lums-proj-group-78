@@ -39,7 +39,9 @@ public class BookingServiceEF : IBookingService
                 WorkerName = b.Worker.FirstName + " " + b.Worker.LastName,
                 CustomerName = b.Job.Customer.FirstName + " " + b.Job.Customer.LastName
             })
-            .OrderByDescending(b => b.ScheduledStart ?? b.ScheduledEnd ?? b.BookingID)
+            .OrderByDescending(b => b.ScheduledStart)
+            .ThenByDescending(b => b.ScheduledEnd)
+            .ThenByDescending(b => b.BookingID)
             .Take(100)
             .ToListAsync();
     }

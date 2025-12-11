@@ -8,6 +8,11 @@ This app targets .NET 8. If only .NET 9 is installed, set roll-forward so it run
    - `copy .env ServiceConnect.API\.env`
 2) Trust HTTPS dev cert (for https://localhost:5001):
    - `dotnet dev-certs https --trust`
+   
+## do (from /backend folder root)
+dotnet restore
+dotnet build
+
 
 ## Run (Development + roll-forward to 9)
 From `deliverable phase III/backend`:
