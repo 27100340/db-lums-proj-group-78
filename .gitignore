@@ -1,0 +1,15 @@
+# .NET build artifacts
+bin/
+obj/
+**/bin/
+**/obj/
+**/.vs/
+
+# Node/Next.js
+**/node_modules/
+**/.next/
+**/out/
+
+# Tooling / local data
+**/.qodo/
+*.log
