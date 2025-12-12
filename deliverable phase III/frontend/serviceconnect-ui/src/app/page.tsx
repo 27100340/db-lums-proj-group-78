@@ -33,7 +33,7 @@ export default function Home() {
           Welcome to ServiceConnect
         </h1>
         <p className="text-xl text-gray-600 mb-2">
-          Phase 3: Application Development group 78
+          Phase 3: Database group 78
           Baqir , Muhammad , Ayma , Mustafa
         </p>
         <p className="text-lg text-gray-500">
