@@ -131,7 +131,7 @@ public class JobServiceEF : IJobService
 
     public async Task<IEnumerable<JobDTO>> GetOpenJobsAsync()
     {
-        // Using LINQ query
+        // use linq query
         return await _context.Jobs
             .Where(j => j.Status == "Open")
             .Include(j => j.Customer)
@@ -205,7 +205,7 @@ public class JobServiceEF : IJobService
 
     public async Task<IEnumerable<JobDTO>> GetJobsByLocationAsync(string city, int categoryId)
     {
-        // Using Table-Valued Function simulation with LINQ
+        // use table function via linq
         var query = from j in _context.Jobs
                     join c in _context.Customers on j.CustomerID equals c.CustomerID
                     join sc in _context.ServiceCategories on j.CategoryID equals sc.CategoryID
@@ -228,7 +228,7 @@ public class JobServiceEF : IJobService
 
     public async Task<IEnumerable<object>> GetActiveJobsWithBidsAsync()
     {
-        // Using View - query vw_ActiveJobsWithBids
+        // used view query vw_ActiveJobsWithBids
         var activeJobs = await (from j in _context.Jobs
                                 join c in _context.Customers on j.CustomerID equals c.CustomerID
                                 join sc in _context.ServiceCategories on j.CategoryID equals sc.CategoryID
@@ -253,7 +253,7 @@ public class JobServiceEF : IJobService
 
     public async Task<int> CalculateJobComplexityAsync(decimal budget, string urgencyLevel, int requiredWorkers)
     {
-        // Simulating scalar function fn_CalculateJobComplexity using LINQ logic
+        // showingscalar function fn_CalculateJobComplexity by linq
         int score = 0;
 
         if (budget > 5000) score += 30;

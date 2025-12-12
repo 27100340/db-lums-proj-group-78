@@ -69,7 +69,7 @@ public class CustomerServiceSP : ICustomerService
 
         try
         {
-            // Create User first
+            // make user first
             var userCommand = new SqlCommand(@"
                 INSERT INTO Users (Email, PasswordHash, PhoneNumber, UserType, RegistrationDate, IsVerified, AccountStatus)
                 VALUES (@Email, @PasswordHash, @PhoneNumber, 'Customer', GETDATE(), 0, 'Active');
@@ -81,7 +81,7 @@ public class CustomerServiceSP : ICustomerService
 
             var userId = (int)await userCommand.ExecuteScalarAsync()!;
 
-            // Create Customer
+            // make customer
             var customerCommand = new SqlCommand(@"
                 INSERT INTO Customers (CustomerID, FirstName, LastName, Address, City, PostalCode, CustomerRating, TotalJobsPosted)
                 VALUES (@CustomerID, @FirstName, @LastName, @Address, @City, @PostalCode, 0, 0)", connection, transaction);
@@ -182,7 +182,7 @@ public class CustomerServiceSP : ICustomerService
 
     public async Task<IEnumerable<object>> GetCustomerAnalyticsAsync()
     {
-        // Using View vw_CustomerAnalytics
+        //  view vw_CustomerAnalytics
         var analytics = new List<object>();
 
         using var connection = new SqlConnection(_connectionString);

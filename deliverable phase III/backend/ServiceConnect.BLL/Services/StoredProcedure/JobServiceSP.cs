@@ -296,7 +296,7 @@ public class JobServiceSP : IJobService
 
     public async Task<IEnumerable<JobDTO>> GetJobsByLocationAsync(string city, int categoryId)
     {
-        // Using Table-Valued Function fn_GetJobsByLocation
+        // tbale valued fn_GetJobsByLocation
         var jobs = new List<JobDTO>();
 
         using var connection = new SqlConnection(_connectionString);
@@ -327,7 +327,7 @@ public class JobServiceSP : IJobService
 
     public async Task<IEnumerable<object>> GetActiveJobsWithBidsAsync()
     {
-        // Using View vw_ActiveJobsWithBids
+        // view vw_ActiveJobsWithBids
         var results = new List<object>();
 
         using var connection = new SqlConnection(_connectionString);
@@ -359,7 +359,7 @@ public class JobServiceSP : IJobService
 
     public async Task<int> CalculateJobComplexityAsync(decimal budget, string urgencyLevel, int requiredWorkers)
     {
-        // Using Scalar Function fn_CalculateJobComplexity
+        // scalar function fn_CalculateJobComplexity
         using var connection = new SqlConnection(_connectionString);
         await connection.OpenAsync();
 

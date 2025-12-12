@@ -62,7 +62,7 @@ public class CustomerServiceEF : ICustomerService
 
     public async Task<CustomerDTO> CreateCustomerAsync(CustomerDTO customerDto)
     {
-        // Create User first
+        // make user
         var user = new User
         {
             Email = customerDto.Email,
@@ -77,7 +77,7 @@ public class CustomerServiceEF : ICustomerService
         _context.Users.Add(user);
         await _context.SaveChangesAsync();
 
-        // Create Customer
+        // make customer
         var customer = new Customer
         {
             CustomerID = user.UserID,
@@ -146,7 +146,7 @@ public class CustomerServiceEF : ICustomerService
 
     public async Task<IEnumerable<object>> GetCustomerAnalyticsAsync()
     {
-        // Using View - query vw_CustomerAnalytics
+        // Use the view query vw_CustomerAnalytics
         var analytics = await (from c in _context.Customers
                                let activeJobs = _context.Jobs.Where(j => j.CustomerID == c.CustomerID && (j.Status == "Open" || j.Status == "Assigned"))
                                let completedBookings = _context.Bookings.Where(b => b.Job.CustomerID == c.CustomerID && b.Status == "Completed")

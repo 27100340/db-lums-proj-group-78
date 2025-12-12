@@ -33,7 +33,7 @@ public class User
     [StringLength(20)]
     public string AccountStatus { get; set; } = "Active";
 
-    // Navigation properties
+    // navigation
     public virtual Worker? Worker { get; set; }
     public virtual Customer? Customer { get; set; }
     public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();

@@ -28,7 +28,7 @@ public class Notification
     [StringLength(50)]
     public string? RelatedEntityType { get; set; }
 
-    // Navigation properties
+    //navigation
     [ForeignKey("UserID")]
     public virtual User User { get; set; } = null!;
 }

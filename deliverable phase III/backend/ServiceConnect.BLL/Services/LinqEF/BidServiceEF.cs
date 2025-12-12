@@ -162,8 +162,8 @@ public class BidServiceEF : IBidService
 
     public async Task<string> AcceptBidAsync(int bidId)
     {
-        // Simulating sp_AcceptBid stored procedure with LINQ
-        // This also triggers trg_NotifyOnBidAccepted (after update trigger on Bids)
+        // sp_AcceptBid sproc with linq
+        // should trigger trg_NotifyOnBidAccepted 
         using var transaction = await _context.Database.BeginTransactionAsync();
 
         try
@@ -174,11 +174,11 @@ public class BidServiceEF : IBidService
 
             if (bid == null) throw new Exception("Bid not found");
 
-            // Update bid status
+            // bid status
             bid.Status = "Accepted";
             bid.IsWinningBid = true;
 
-            // Reject other pending bids for same job
+            // stopp other pending bids for same job
             var otherBids = await _context.Bids
                 .Where(b => b.JobID == bid.JobID && b.BidID != bidId && b.Status == "Pending")
                 .ToListAsync();
@@ -188,10 +188,10 @@ public class BidServiceEF : IBidService
                 otherBid.Status = "Rejected";
             }
 
-            // Generate booking code
+            //  booking code creation
             var bookingCode = "BK" + new Random().Next(100000, 999999).ToString();
 
-            // Create booking
+            // booking creation
             var booking = new Booking
             {
                 JobID = bid.JobID,
@@ -204,12 +204,12 @@ public class BidServiceEF : IBidService
 
             _context.Bookings.Add(booking);
 
-            // Update job status
+            // modify job status
             bid.Job.Status = "Assigned";
 
             await _context.SaveChangesAsync();
 
-            // Create notification (simulating trigger trg_NotifyOnBidAccepted)
+            // notification trigger
             var notification = new Notification
             {
                 UserID = bid.WorkerID,
@@ -238,7 +238,7 @@ public class BidServiceEF : IBidService
 
     public async Task<object> GetBidStatsAsync(int jobId)
     {
-        // Simulating fn_GetBidStats table-valued function
+        //  fn_GetBidStats table-valued function
         var bids = await _context.Bids
             .Where(b => b.JobID == jobId)
             .ToListAsync();

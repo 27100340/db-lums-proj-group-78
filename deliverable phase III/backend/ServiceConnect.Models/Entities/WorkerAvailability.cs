@@ -20,7 +20,7 @@ public class WorkerAvailability
 
     public bool IsRecurring { get; set; } = true;
 
-    // Navigation properties
+    // navigation
     [ForeignKey("WorkerID")]
     public virtual Worker Worker { get; set; } = null!;
 }

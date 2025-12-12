@@ -646,5 +646,3 @@ kubectl scale deployment backend --replicas=5 -n serviceconnect
 - **Next.js Docker**: https://nextjs.org/docs/deployment#docker-image
 
 ---
-
-**This guide provides a complete roadmap for implementing Phase 4 (Kubernetes deployment) as extra credit.**

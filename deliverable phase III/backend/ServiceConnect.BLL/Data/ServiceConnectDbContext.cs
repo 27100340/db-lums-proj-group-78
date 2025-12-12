@@ -10,7 +10,7 @@ public class ServiceConnectDbContext : DbContext
     {
     }
 
-    // DbSets for all entities
+    // dbsets standard for all entities
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<Worker> Workers { get; set; } = null!;
     public DbSet<Customer> Customers { get; set; } = null!;
@@ -29,7 +29,7 @@ public class ServiceConnectDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        // Configure table names to match SQL Server
+        // changing the  table names to match sql 
         modelBuilder.Entity<User>().ToTable("Users");
         modelBuilder.Entity<Worker>().ToTable("Workers");
         modelBuilder.Entity<Customer>().ToTable("Customers");
@@ -44,7 +44,7 @@ public class ServiceConnectDbContext : DbContext
         modelBuilder.Entity<WorkerServiceArea>().ToTable("WorkerServiceAreas");
         modelBuilder.Entity<Notification>().ToTable("Notifications");
 
-        // Configure relationships
+        // setup links between user and worker
         modelBuilder.Entity<Worker>()
             .HasOne(w => w.User)
             .WithOne(u => u.Worker)
@@ -57,14 +57,14 @@ public class ServiceConnectDbContext : DbContext
             .HasForeignKey<Customer>(c => c.CustomerID)
             .OnDelete(DeleteBehavior.Restrict);
 
-        // Disable cascading deletes to match SQL Server constraints
+        // stop cascad delete
         foreach (var relationship in modelBuilder.Model.GetEntityTypes()
             .SelectMany(e => e.GetForeignKeys()))
         {
             relationship.DeleteBehavior = DeleteBehavior.Restrict;
         }
 
-        // Configure indexes (matching Phase 2 SQL)
+        // setup indexes for optmize
         modelBuilder.Entity<Job>().HasIndex(j => j.CustomerID);
         modelBuilder.Entity<Job>().HasIndex(j => j.CategoryID);
         modelBuilder.Entity<Job>().HasIndex(j => j.Status);

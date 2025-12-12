@@ -28,7 +28,7 @@ public class Review
 
     public int WasHelpful { get; set; } = 0;
 
-    // Navigation properties
+    // navigation
     [ForeignKey("BookingID")]
     public virtual Booking Booking { get; set; } = null!;
 

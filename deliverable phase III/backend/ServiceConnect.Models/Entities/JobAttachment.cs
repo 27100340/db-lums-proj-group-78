@@ -22,7 +22,7 @@ public class JobAttachment
     [StringLength(255)]
     public string? Description { get; set; }
 
-    // Navigation properties
+    // navigation
     [ForeignKey("JobID")]
     public virtual Job Job { get; set; } = null!;
 }

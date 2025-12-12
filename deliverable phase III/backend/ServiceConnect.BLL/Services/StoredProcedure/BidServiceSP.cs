@@ -208,8 +208,8 @@ public class BidServiceSP : IBidService
 
     public async Task<string> AcceptBidAsync(int bidId)
     {
-        // Using Stored Procedure sp_AcceptBid
-        // This automatically triggers trg_NotifyOnBidAccepted (AFTER UPDATE trigger)
+        // sproc sp_AcceptBid
+        // automatically trigger trg_NotifyOnBidAccepted after update trigger
         using var connection = new SqlConnection(_connectionString);
         await connection.OpenAsync();
 
@@ -234,7 +234,7 @@ public class BidServiceSP : IBidService
 
     public async Task<object> GetBidStatsAsync(int jobId)
     {
-        // Using Table-Valued Function fn_GetBidStats
+        //  table value function fn_GetBidStats
         using var connection = new SqlConnection(_connectionString);
         await connection.OpenAsync();
 

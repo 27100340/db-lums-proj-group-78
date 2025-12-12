@@ -6,7 +6,7 @@ using ServiceConnect.BLL.Services.LinqEF;
 using ServiceConnect.BLL.Services.StoredProcedure;
 
 namespace ServiceConnect.BLL.Factories;
-
+/// used gpt help for this file
 /// <summary>
 /// Factory Pattern implementation for runtime BLL selection.
 /// Allows switching between LINQ/Entity Framework and Stored Procedure implementations.

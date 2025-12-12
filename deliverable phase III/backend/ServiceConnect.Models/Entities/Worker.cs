@@ -54,7 +54,7 @@ public class Worker
 
     public int TotalJobsCompleted { get; set; } = 0;
 
-    // Navigation properties
+    // navigation
     public virtual User User { get; set; } = null!;
     public virtual ICollection<WorkerSkill> WorkerSkills { get; set; } = new List<WorkerSkill>();
     public virtual ICollection<Bid> Bids { get; set; } = new List<Bid>();

@@ -38,6 +38,6 @@ public class WorkerDTO
     public int TotalJobsCompleted { get; set; }
     public string? Bio { get; set; }
 
-    // For registration only
+    // registration
     public string? Password { get; set; }
 }

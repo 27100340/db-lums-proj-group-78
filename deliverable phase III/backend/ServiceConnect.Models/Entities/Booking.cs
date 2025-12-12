@@ -34,7 +34,7 @@ public class Booking
 
     public string? CompletionNotes { get; set; }
 
-    // Navigation properties
+    // navigation
     [ForeignKey("JobID")]
     public virtual Job Job { get; set; } = null!;
 

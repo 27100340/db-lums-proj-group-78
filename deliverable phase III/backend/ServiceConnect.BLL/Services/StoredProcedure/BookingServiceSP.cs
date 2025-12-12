@@ -126,7 +126,7 @@ public class BookingServiceSP : IBookingService
 
     public async Task<bool> DeleteBookingAsync(int bookingId)
     {
-        // This will trigger trg_PreventDeleteCompletedBooking (INSTEAD OF DELETE trigger)
+        // will trigger trg_PreventDeleteCompletedBooking in place of delete trigger
         using var connection = new SqlConnection(_connectionString);
         await connection.OpenAsync();
 
@@ -224,8 +224,8 @@ public class BookingServiceSP : IBookingService
 
     public async Task<bool> CompleteBookingAsync(int bookingId, string? completionNotes)
     {
-        // Using Stored Procedure sp_CompleteBooking
-        // This automatically triggers trg_UpdateJobCompletionOnBooking (AFTER UPDATE trigger)
+        // sproc sp_CompleteBooking
+        // triggers trg_UpdateJobCompletionOnBooking after update trigger
         using var connection = new SqlConnection(_connectionString);
         await connection.OpenAsync();
 
@@ -243,7 +243,7 @@ public class BookingServiceSP : IBookingService
 
     public async Task<IEnumerable<object>> GetBookingSummaryByCategoryAsync()
     {
-        // Using View vw_BookingSummaryByCategory
+        // view vw_BookingSummaryByCategory
         var summary = new List<object>();
 
         using var connection = new SqlConnection(_connectionString);
