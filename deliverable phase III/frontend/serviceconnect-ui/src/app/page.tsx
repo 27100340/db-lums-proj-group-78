@@ -34,7 +34,7 @@ export default function Home() {
         </h1>
         <p className="text-xl text-gray-600 mb-2">
           Phase 3: Application Development group 78
-          Baqir , Mohammad , Ayma , Mustafa
+          Baqir , Muhammad , Ayma , Mustafa
         </p>
         <p className="text-lg text-gray-500">
           Current BLL Implementation: <span className="font-semibold text-primary-600">{bllType}</span>
