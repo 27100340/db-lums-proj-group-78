@@ -1,9 +1,3 @@
--- ========================================================================
--- PHASE 3: DATABASE RECREATION SCRIPT
--- Run this script in SQL Server Management Studio (SSMS)
--- ========================================================================
-
--- STEP 1: Drop existing database (if exists)
 PRINT '========================================================';
 PRINT 'STEP 1: Dropping existing ServiceConnect database...';
 PRINT '========================================================';

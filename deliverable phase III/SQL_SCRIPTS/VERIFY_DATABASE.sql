@@ -1,8 +1,3 @@
--- ========================================================================
--- DATABASE VERIFICATION SCRIPT
--- Run this after executing ServiceConnect_Phase2.sql
--- ========================================================================
-
 USE ServiceConnect;
 GO
 
