@@ -47,7 +47,7 @@ public class Job
 
     public int CompletedWorkers { get; set; } = 0;
 
-    // Navigation properties
+    // navigation
     [ForeignKey("CustomerID")]
     public virtual Customer Customer { get; set; } = null!;
 

@@ -34,7 +34,7 @@ public class Customer
 
     public int TotalJobsPosted { get; set; } = 0;
 
-    // Navigation properties
+    // navigation
     public virtual User User { get; set; } = null!;
     public virtual ICollection<Job> Jobs { get; set; } = new List<Job>();
 }

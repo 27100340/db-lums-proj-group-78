@@ -5,10 +5,10 @@ using DotNetEnv;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Load environment variables from .env file
+// load environment variables from .env file
 Env.Load();
 
-// Build connection string from environment variables
+// build connection string from environment variables
 var dbServer = Environment.GetEnvironmentVariable("DB_SERVER");
 var dbName = Environment.GetEnvironmentVariable("DB_NAME") ?? "ServiceConnect";
 var integratedSecurity = Environment.GetEnvironmentVariable("DB_INTEGRATED_SECURITY")?.ToLower() == "true";
@@ -25,13 +25,13 @@ else
     connectionString = $"Server={dbServer};Database={dbName};User Id={dbUser};Password={dbPassword};TrustServerCertificate=True;";
 }
 
-// Add connection string to configuration
+// connection string to configuration
 builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
 {
     ["ConnectionStrings:ServiceConnectDB"] = connectionString
 });
 
-// Add services to the container
+// add services to the container
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -44,25 +44,22 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// Configure DbContext for Entity Framework
+// set DbContext for EF
 builder.Services.AddDbContext<ServiceConnectDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-// Register ServiceFactory as a scoped service
-// The BLL type (LinqEF or StoredProcedure) can be switched via query parameter or config
+// gpt help for the few lines below
 builder.Services.AddScoped<ServiceFactory>(sp =>
 {
     var config = sp.GetRequiredService<IConfiguration>();
     var dbContext = sp.GetRequiredService<ServiceConnectDbContext>();
 
-    // Read BLL type from environment variable (default to LINQ/EF)
     var bllTypeSetting = Environment.GetEnvironmentVariable("BLL_TYPE") ?? "LinqEF";
     var bllType = bllTypeSetting.ToLower() == "storedprocedure" ? BllType.StoredProcedure : BllType.LinqEF;
 
     return new ServiceFactory(config, bllType, dbContext);
 });
 
-// Add CORS policy for Next.js frontend
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowNextJs", policy =>
@@ -85,7 +82,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("AllowNextJs");
 
-// Avoid redirecting to HTTPS in Development to keep local http://localhost:5000 working smoothly
+// keep local http://localhost:5000 
 if (!app.Environment.IsDevelopment())
 {
     app.UseHttpsRedirection();
@@ -95,7 +92,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// Custom endpoint to switch BLL type at runtime
 app.MapGet("/api/config/bll-type", () =>
 {
     var currentType = Environment.GetEnvironmentVariable("BLL_TYPE") ?? "LinqEF";

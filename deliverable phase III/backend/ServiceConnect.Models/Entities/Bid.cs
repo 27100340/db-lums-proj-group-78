@@ -29,7 +29,7 @@ public class Bid
 
     public bool IsWinningBid { get; set; } = false;
 
-    // Navigation properties
+    // navigation 
     [ForeignKey("JobID")]
     public virtual Job Job { get; set; } = null!;
 

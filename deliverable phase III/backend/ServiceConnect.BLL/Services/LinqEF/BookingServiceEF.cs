@@ -118,7 +118,7 @@ public class BookingServiceEF : IBookingService
 
     public async Task<bool> DeleteBookingAsync(int bookingId)
     {
-        // Simulating trg_PreventDeleteCompletedBooking (instead of delete trigger)
+        // showing trg_PreventDeleteCompletedBooking in place of delete trigger
         var booking = await _context.Bookings.FindAsync(bookingId);
         if (booking == null) return false;
 
@@ -178,8 +178,8 @@ public class BookingServiceEF : IBookingService
 
     public async Task<bool> CompleteBookingAsync(int bookingId, string? completionNotes)
     {
-        // Simulating sp_CompleteBooking stored procedure
-        // This also triggers trg_UpdateJobCompletionOnBooking (after update trigger)
+        // simulating sp_CompleteBooking stored procedure
+        // this should trigger trg_UpdateJobCompletionOnBooking 
         using var transaction = await _context.Database.BeginTransactionAsync();
 
         try
@@ -190,17 +190,17 @@ public class BookingServiceEF : IBookingService
 
             if (booking == null) return false;
 
-            // Update booking
+            // change booking
             booking.Status = "Completed";
             booking.ActualEnd = DateTime.Now;
             booking.CompletionNotes = completionNotes;
 
-            // Update job status
+            // modify job status
             booking.Job.Status = "Completed";
 
             await _context.SaveChangesAsync();
 
-            // Simulate trigger trg_UpdateJobCompletionOnBooking
+            // trigger trg_UpdateJobCompletionOnBooking
             var completedCount = await _context.Bookings
                 .CountAsync(b => b.JobID == booking.JobID && b.Status == "Completed");
 
@@ -220,7 +220,7 @@ public class BookingServiceEF : IBookingService
 
     public async Task<IEnumerable<object>> GetBookingSummaryByCategoryAsync()
     {
-        // Using View - query vw_BookingSummaryByCategory
+        // using view query vw_BookingSummaryByCategory
         var summary = await (from b in _context.Bookings
                              join j in _context.Jobs on b.JobID equals j.JobID
                              join sc in _context.ServiceCategories on j.CategoryID equals sc.CategoryID

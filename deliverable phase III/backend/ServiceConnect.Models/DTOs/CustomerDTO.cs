@@ -32,6 +32,6 @@ public class CustomerDTO
     public decimal? CustomerRating { get; set; }
     public int TotalJobsPosted { get; set; }
 
-    // For registration only
+    // registration aka signup
     public string? Password { get; set; }
 }

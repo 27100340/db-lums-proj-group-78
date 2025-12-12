@@ -66,7 +66,7 @@ public class WorkerServiceEF : IWorkerService
 
     public async Task<WorkerDTO> CreateWorkerAsync(WorkerDTO workerDto)
     {
-        // Create User first
+        // make user
         var user = new User
         {
             Email = workerDto.Email,
@@ -81,7 +81,7 @@ public class WorkerServiceEF : IWorkerService
         _context.Users.Add(user);
         await _context.SaveChangesAsync();
 
-        // Create Worker
+        // make worker
         var worker = new Worker
         {
             WorkerID = user.UserID,
@@ -178,7 +178,7 @@ public class WorkerServiceEF : IWorkerService
 
     public async Task<IEnumerable<object>> GetAvailableWorkersForJobAsync(int jobId, int categoryId)
     {
-        // Simulating sp_GetAvailableWorkers stored procedure with LINQ
+        // show sp_GetAvailableWorkers sproc with linq
         var availableWorkers = await (from w in _context.Workers
                                       join ws in _context.WorkerSkills on w.WorkerID equals ws.WorkerID
                                       where ws.CategoryID == categoryId
@@ -201,7 +201,7 @@ public class WorkerServiceEF : IWorkerService
 
     public async Task<object> GetWorkerPerformanceAsync(int workerId)
     {
-        // Simulating sp_GetWorkerPerformance stored procedure
+        // sp_GetWorkerPerformance sproc
         var worker = await _context.Workers.FindAsync(workerId);
         if (worker == null) return new { };
 
@@ -228,7 +228,7 @@ public class WorkerServiceEF : IWorkerService
 
     public async Task<IEnumerable<object>> GetTopPerformersByCategoryAsync(int categoryId)
     {
-        // Simulating sp_TopPerformersByCategory with CTE using LINQ
+        //  sp_TopPerformersByCategory sproc
         var topPerformers = await (from w in _context.Workers
                                    join ws in _context.WorkerSkills on w.WorkerID equals ws.WorkerID
                                    where ws.CategoryID == categoryId
@@ -255,7 +255,7 @@ public class WorkerServiceEF : IWorkerService
 
     public async Task<decimal> GetWorkerReliabilityScoreAsync(int workerId)
     {
-        // Simulating fn_GetWorkerReliabilityScore function
+        // fn_GetWorkerReliabilityScore function
         var totalBookings = await _context.Bookings.CountAsync(b => b.WorkerID == workerId);
         var completedBookings = await _context.Bookings.CountAsync(b => b.WorkerID == workerId && b.Status == "Completed");
 
@@ -266,7 +266,7 @@ public class WorkerServiceEF : IWorkerService
 
     public async Task<IEnumerable<object>> GetTopRatedWorkersAsync()
     {
-        // Using View - query vw_TopRatedWorkers
+        // sing view query vw_TopRatedWorkers
         var topRated = await (from w in _context.Workers
                               join ws in _context.WorkerSkills on w.WorkerID equals ws.WorkerID into workerSkills
                               from ws in workerSkills.DefaultIfEmpty()

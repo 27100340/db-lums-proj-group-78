@@ -23,7 +23,7 @@ public class ServiceCategory
 
     public bool IsActive { get; set; } = true;
 
-    // Navigation properties
+    // navigation
     public virtual ICollection<WorkerSkill> WorkerSkills { get; set; } = new List<WorkerSkill>();
     public virtual ICollection<Job> Jobs { get; set; } = new List<Job>();
 }

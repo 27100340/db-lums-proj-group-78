@@ -30,7 +30,7 @@ public class BookingDTO
 
     public string? CompletionNotes { get; set; }
 
-    // Additional fields for display
+    //  display fields
     public string? JobTitle { get; set; }
     public string? WorkerName { get; set; }
     public string? CustomerName { get; set; }

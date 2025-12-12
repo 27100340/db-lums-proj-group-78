@@ -17,11 +17,11 @@ public class WorkerServiceArea
     [StringLength(10)]
     public string? PostalCode { get; set; }
 
-    public int? MaxDistance { get; set; } // in kilometers
+    public int? MaxDistance { get; set; } // in km
 
     public bool IsActive { get; set; } = true;
 
-    // Navigation properties
+    // navigation
     [ForeignKey("WorkerID")]
     public virtual Worker Worker { get; set; } = null!;
 }

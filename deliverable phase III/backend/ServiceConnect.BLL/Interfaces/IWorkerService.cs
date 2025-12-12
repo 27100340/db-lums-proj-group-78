@@ -4,25 +4,25 @@ namespace ServiceConnect.BLL.Interfaces;
 
 public interface IWorkerService
 {
-    // CRUD Operations
+    // create, read, update, delete
     Task<IEnumerable<WorkerDTO>> GetAllWorkersAsync();
     Task<WorkerDTO?> GetWorkerByIdAsync(int workerId);
     Task<WorkerDTO> CreateWorkerAsync(WorkerDTO workerDto);
     Task<bool> UpdateWorkerAsync(WorkerDTO workerDto);
     Task<bool> DeleteWorkerAsync(int workerId);
 
-    // Business Logic Operations
+    // logic operations
     Task<IEnumerable<WorkerDTO>> GetWorkersBySkillAsync(int categoryId);
     Task<IEnumerable<WorkerDTO>> GetWorkersByCityAsync(string city);
 
-    // Using Stored Procedures
+    // sprocs
     Task<IEnumerable<object>> GetAvailableWorkersForJobAsync(int jobId, int categoryId);
     Task<object> GetWorkerPerformanceAsync(int workerId);
     Task<IEnumerable<object>> GetTopPerformersByCategoryAsync(int categoryId);
 
-    // Using Functions
+    // functions
     Task<decimal> GetWorkerReliabilityScoreAsync(int workerId);
 
-    // Using Views
+    // views
     Task<IEnumerable<object>> GetTopRatedWorkersAsync();
 }

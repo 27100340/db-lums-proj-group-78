@@ -72,7 +72,7 @@ public class WorkerServiceSP : IWorkerService
 
         try
         {
-            // Create User first
+            // make user first
             var userCommand = new SqlCommand(@"
                 INSERT INTO Users (Email, PasswordHash, PhoneNumber, UserType, RegistrationDate, IsVerified, AccountStatus)
                 VALUES (@Email, @PasswordHash, @PhoneNumber, 'Worker', GETDATE(), 0, 'Active');
@@ -84,7 +84,7 @@ public class WorkerServiceSP : IWorkerService
 
             var userId = (int)await userCommand.ExecuteScalarAsync()!;
 
-            // Create Worker
+            // make worker
             var workerCommand = new SqlCommand(@"
                 INSERT INTO Workers (WorkerID, FirstName, LastName, DateOfBirth, Address, City, PostalCode, HourlyRate, OverallRating, TotalJobsCompleted, Bio)
                 VALUES (@WorkerID, @FirstName, @LastName, @DateOfBirth, @Address, @City, @PostalCode, @HourlyRate, 0, 0, @Bio)", connection, transaction);
@@ -229,7 +229,7 @@ public class WorkerServiceSP : IWorkerService
 
     public async Task<IEnumerable<object>> GetAvailableWorkersForJobAsync(int jobId, int categoryId)
     {
-        // Using Stored Procedure sp_GetAvailableWorkers
+        // sproc sp_GetAvailableWorkers
         var workers = new List<object>();
 
         using var connection = new SqlConnection(_connectionString);
@@ -264,7 +264,7 @@ public class WorkerServiceSP : IWorkerService
 
     public async Task<object> GetWorkerPerformanceAsync(int workerId)
     {
-        // Using Stored Procedure sp_GetWorkerPerformance
+        // sproc sp_GetWorkerPerformance
         using var connection = new SqlConnection(_connectionString);
         await connection.OpenAsync();
 
@@ -297,7 +297,7 @@ public class WorkerServiceSP : IWorkerService
 
     public async Task<IEnumerable<object>> GetTopPerformersByCategoryAsync(int categoryId)
     {
-        // Using Stored Procedure sp_TopPerformersByCategory (uses CTE)
+        // sproc sp_TopPerformersByCategory
         var performers = new List<object>();
 
         using var connection = new SqlConnection(_connectionString);
@@ -331,7 +331,7 @@ public class WorkerServiceSP : IWorkerService
 
     public async Task<decimal> GetWorkerReliabilityScoreAsync(int workerId)
     {
-        // Using Scalar Function fn_GetWorkerReliabilityScore
+        // scalar func fn_GetWorkerReliabilityScore
         using var connection = new SqlConnection(_connectionString);
         await connection.OpenAsync();
 
@@ -344,7 +344,7 @@ public class WorkerServiceSP : IWorkerService
 
     public async Task<IEnumerable<object>> GetTopRatedWorkersAsync()
     {
-        // Using View vw_TopRatedWorkers
+        // use view vw_TopRatedWorkers
         var workers = new List<object>();
 
         using var connection = new SqlConnection(_connectionString);

@@ -14,7 +14,7 @@ public class WorkerSkill
     public int CategoryID { get; set; }
 
     [StringLength(20)]
-    public string? SkillLevel { get; set; } // Beginner, Intermediate, Expert
+    public string? SkillLevel { get; set; } // beginner intermediate expert
 
     [StringLength(255)]
     public string? CertificationURL { get; set; }
@@ -23,7 +23,7 @@ public class WorkerSkill
 
     public int? YearsExperience { get; set; }
 
-    // Navigation properties
+    // navigation
     [ForeignKey("WorkerID")]
     public virtual Worker Worker { get; set; } = null!;
 

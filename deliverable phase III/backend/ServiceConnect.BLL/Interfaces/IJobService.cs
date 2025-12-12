@@ -5,22 +5,22 @@ namespace ServiceConnect.BLL.Interfaces;
 
 public interface IJobService
 {
-    // CRUD Operations
+    // create,read,update,delete
     Task<IEnumerable<JobDTO>> GetAllJobsAsync();
     Task<JobDTO?> GetJobByIdAsync(int jobId);
     Task<JobDTO> CreateJobAsync(JobDTO jobDto);
     Task<bool> UpdateJobAsync(JobDTO jobDto);
     Task<bool> DeleteJobAsync(int jobId);
 
-    // Business Logic Operations
+    // logic operations
     Task<IEnumerable<JobDTO>> GetOpenJobsAsync();
     Task<IEnumerable<JobDTO>> GetJobsByCategoryAsync(int categoryId);
     Task<IEnumerable<JobDTO>> GetJobsByCustomerAsync(int customerId);
     Task<IEnumerable<JobDTO>> GetJobsByLocationAsync(string city, int categoryId);
 
-    // Using Views
+    // views
     Task<IEnumerable<object>> GetActiveJobsWithBidsAsync();
 
-    // Using Functions
+    // functions
     Task<int> CalculateJobComplexityAsync(decimal budget, string urgencyLevel, int requiredWorkers);
 }

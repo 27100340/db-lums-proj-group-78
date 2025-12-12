@@ -35,7 +35,7 @@ public class JobDTO
     [Range(1, 100, ErrorMessage = "Required workers must be between 1 and 100")]
     public int RequiredWorkers { get; set; } = 1;
 
-    // Additional fields for display
+    // display fields
     public string? CustomerName { get; set; }
     public string? CategoryName { get; set; }
     public DateTime? PostedDate { get; set; }
