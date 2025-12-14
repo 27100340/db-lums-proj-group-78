@@ -93,10 +93,12 @@ DB_SERVER=localhost,31433
 DB_SERVER="127.0.0.1,31433"
 
 # run in ps for portforwarding:
+```powershell
 while ($true) {
   kubectl port-forward -n sqlserver-ha svc/sqlserver 31433:1433
   Start-Sleep -Seconds 2  # small backoff before retry
 }
+```
 ## then run backend
 
 **That's it!** Your backend now connects to Kubernetes SQL Server.
