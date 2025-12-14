@@ -2,43 +2,42 @@
 # Bash script to cleanup SQL Server Kubernetes resources
 
 echo "========================================"
-echo "SQL Server Kubernetes Cleanup"
-echo "========================================"
+echo "sql server kubernetes cleanup"
+echo "==================================="
 echo ""
 
-echo "WARNING: This will delete all SQL Server resources from Kubernetes!"
-echo "This includes:"
-echo "  - All SQL Server pods"
-echo "  - All persistent volumes (DATABASE DATA WILL BE LOST!)"
-echo "  - All services"
-echo "  - All secrets"
-echo "  - The entire 'sqlserver-ha' namespace"
+echo "note: this deletes all sql server resources from ubernetes"
+echo "including"
+echo "  all sql pods"
+echo "  all persistent volumes (db data gone)"
+echo "  all services"
+echo "  all secrets"
+echo "  entire 'sqlserver-ha' namespace"
 echo ""
 
-read -p "Are you sure you want to continue? Type 'yes' to confirm: " confirm
+read -p "are you sure you want to continue? Type 'yes' to confirm: " confirm
 
 if [ "$confirm" != "yes" ]; then
-    echo "Cleanup cancelled."
+    echo "cleanup cancelled"
     exit 0
 fi
 
 echo ""
-echo "Deleting sqlserver-ha namespace..."
+echo "deleting sqlserver-ha namespace"
 kubectl delete namespace sqlserver-ha
 
 echo ""
-echo "Waiting for namespace deletion to complete..."
+echo "wiat for namespace deletion to complete..."
 kubectl wait --for=delete namespace/sqlserver-ha --timeout=120s
 
 echo ""
-echo "========================================"
-echo "Cleanup Complete!"
+echo "cleanup done"
 echo "========================================"
 echo ""
 
-echo "All SQL Server resources have been removed."
+echo "sql server resources have been removed"
 echo ""
 
-echo "To redeploy:"
+echo "to deploy again"
 echo "  ./deploy.sh"
 echo ""
