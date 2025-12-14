@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: sqlserver
+  namespace: sqlserver-ha
+spec:
+  serviceName: sqlserver-headless
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sqlserver
+  template:
+    metadata:
+      labels:
+        app: sqlserver
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+      - name: sqlserver
+        image: mcr.microsoft.com/mssql/server:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 1433
+          name: sql
+        env:
+        - name: ACCEPT_EULA
+          value: "Y"
+        - name: MSSQL_ENABLE_HADR
+          value: "1"
+        - name: MSSQL_SA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: sqlserver-secret
+              key: SA_PASSWORD
+        - name: MSSQL_AGENT_ENABLED
+          value: "true"
+        - name: MSSQL_PID
+          value: "Developer"
+        volumeMounts:
+        - name: sqlserver-data
+          mountPath: /var/opt/mssql
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        livenessProbe:
+          tcpSocket:
+            port: 1433
+          initialDelaySeconds: 60
+          periodSeconds: 20
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          tcpSocket:
+            port: 1433
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+  volumeClaimTemplates:
+  - metadata:
+      name: sqlserver-data
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 10Gi
+      storageClassName: standard

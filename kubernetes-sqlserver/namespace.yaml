@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sqlserver-ha
+  labels:
+    name: sqlserver-ha
+    purpose: database-high-availability
