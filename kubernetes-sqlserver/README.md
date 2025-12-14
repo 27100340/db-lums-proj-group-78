@@ -91,8 +91,12 @@ DB_SERVER=localhost,31433
 
 ### if u face errors try setting all envs in backend to
 DB_SERVER="127.0.0.1,31433"
-## then do following portforward in a separate terminal
-kubectl port-forward -n sqlserver-ha svc/sqlserver 31433:1433
+portforwarding:
+# run in ps
+while ($true) {
+  kubectl port-forward -n sqlserver-ha svc/sqlserver 31433:1433
+  Start-Sleep -Seconds 2  # small backoff before retry
+}
 ## then run backend
 
 **That's it!** Your backend now connects to Kubernetes SQL Server.
